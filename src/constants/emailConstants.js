@@ -11,4 +11,5 @@ export const PERSONAL_EMAIL_DOMAINS = [
   "mail.com",
 ];
 
+
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
