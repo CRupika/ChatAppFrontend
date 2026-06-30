@@ -2,9 +2,83 @@ import SlackLogo from "../components/ui/SlackLogo";
 // import SignupForm from "../components/auth/SignupForm";
 import { InputText } from "primereact/inputtext";
 import { Button } from 'primereact/button';
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../firebase";
 
 const SignupPage = () => {
+  const [value, setValue] = useState("")
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
+  });
+
+
+  const {
+    onChange,
+    ...emailRegister
+  } = register("email", {
+    required: "Email is required",
+    pattern: {
+      value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+      message: "Please enter a valid email address",
+    },
+  });
+
+  const navigate = useNavigate()
+
+  const handleEmailChange = (e) => {
+    setValue(e.target.value)
+  }
+
+  const onSubmit = (data) => {
+    console.log('Data ----> 29', data)
+    if (data.email) {
+      navigate('/verify-email')
+    }
+  }
+
+  // const handleGoogleLogin = () => {
+  //   //  alert(5);
+  //   signInWithPopup(auth, provider)
+  //     .then((result) => {
+  //       const credential = GoogleAuthProvider.credentialFromResult(result);
+  //       const user = result.user;
+  //       console.log('USER ------> 53',user)
+  //       // navigate('/workspace')
+
+  //     }).catch((error) => {
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+
+  //     });
+  // }
+
+  const handleGoogleLogin = async () => {
+    try {
+      console.log("Google login started");
+
+      const result = await signInWithPopup(auth, provider);
+
+      console.log("Login successful");
+      console.log('RESULT ----> 70',result)
+      console.log('USER ----> 71',result.user);
+
+      // navigate("/workspace");
+    } catch (error) {
+      console.log("Login failed");
+      console.log("Error code:", error.code);
+      console.log("Error message:", error.message);
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div
@@ -60,11 +134,17 @@ const SignupPage = () => {
           >
             We suggest using the <b>email address you use at work.</b>
           </div>
-          <form novalidate="" className="w-full max-w-[400px] mx-auto px-4">
+          <form className="w-full max-w-[400px] mx-auto px-4" onSubmit={handleSubmit(onSubmit)}>
             <div style={{ marginBottom: '20px' }}>
               <InputText
-                value={""}
-                onChange={(e) => setValue(e.target.value)}
+                type="text"
+                value={value}
+                placeholder="name@work-email.com"
+                {...emailRegister}
+                onChange={(e) => {
+                  onChange(e);
+                  handleEmailChange(e);
+                }}
                 style={{
                   border: "2px solid #ccc",
                   borderRadius: "12px",
@@ -73,11 +153,16 @@ const SignupPage = () => {
                   width: "75%",
                   fontSize: "16px",
                 }}
-                placeholder="name@work-email.com"
               />
+              {
+                errors.email && (
+                  <p style={{ color: 'red' }}>{errors.email.message}</p>
+                )
+              }
             </div>
             <div style={{ marginBottom: '20px' }}>
               <Button
+                type="submit"
                 label="Continue"
                 severity="help"
                 size="large"
@@ -116,11 +201,13 @@ const SignupPage = () => {
               alignItems: 'center',
               justifyContent: 'center',
               marginBottom: '5%',
-              columnGap:'3%'
+              columnGap: '3%'
             }}
           >
             <div>
               <Button
+                id="google-login-btn"
+                onClick={handleGoogleLogin}
                 style={{
                   height: '43px',
                   borderRadius: '12px',
