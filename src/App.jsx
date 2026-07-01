@@ -3,6 +3,7 @@ import { APP_ROUTES } from "./constants/apiConstants";
 import SignupPage from "./pages/SignupPage";
 import VerifyMailPage from "./pages/VerifyemailPage";
 import WorkSpace from "./pages/WorkSpacePage";
+import Signin from "./pages/WorkSignInPage";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path={APP_ROUTES.HOME} element={<Navigate to={APP_ROUTES.SIGNUP} replace />} />
         <Route path={APP_ROUTES.VERIFY_EMAIL} element={<VerifyMailPage/>}/>
         <Route path={APP_ROUTES.WORKSPACE} element={<WorkSpace/>}/>
+        <Route path={APP_ROUTES.SIGNIN} element={<Signin/>}/>
       </Routes>
     </BrowserRouter>
   );

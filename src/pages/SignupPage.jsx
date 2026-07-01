@@ -1,5 +1,4 @@
 import SlackLogo from "../components/ui/SlackLogo";
-// import SignupForm from "../components/auth/SignupForm";
 import { InputText } from "primereact/inputtext";
 import { Button } from 'primereact/button';
 import { useState } from "react";
@@ -7,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase";
+import CommonInput from "../components/ui/CommonInput";
+import { FiGlobe } from "react-icons/fi";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import slack from '../../src/assets/slack.png'
 
 const SignupPage = () => {
   const [value, setValue] = useState("")
@@ -67,8 +70,8 @@ const SignupPage = () => {
       const result = await signInWithPopup(auth, provider);
 
       console.log("Login successful");
-      console.log('RESULT ----> 70',result)
-      console.log('USER ----> 71',result.user);
+      console.log('RESULT ----> 70', result)
+      console.log('USER ----> 71', result.user);
 
       // navigate("/workspace");
     } catch (error) {
@@ -101,12 +104,36 @@ const SignupPage = () => {
         >
           <div class="left-col"></div>
           <div className="text-center">
-            <a target="_self" className="c-link" href="https://slack.com" rel="noopener noreferrer">
-              <img alt="Slack" height="26" title="Slack" src="https://a.slack-edge.com/bv1-13/slack_logo-e971fd7.svg" />
+            <a
+              target="_self"
+              className="c-link"
+              href="https://slack.com"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none' }}
+            >
+              {/* <img alt="Connectly" height="26" title="Connectly" src="https://a.slack-edge.com/bv1-13/slack_logo-e971fd7.svg" /> */}
+              <img
+                alt="Connectly"
+                height="26"
+                title="Connectly"
+                src={slack}
+              />
+              <span
+                style={{
+                 fontFamily: "Lato, sans-serif",
+                  fontWeight: '600',
+                  fontSize: '35px',
+                  letterSpacing: '-1px',
+                  color: ' #1d1c1d',
+                  marginLeft: '5px'
+                }}
+              >
+                Connectly
+              </span>
             </a>
           </div>
           <div className="right-col"></div>
-        </header>
+        </header >
         <div
           style={{
             flexDirection: 'column',
@@ -136,7 +163,7 @@ const SignupPage = () => {
           </div>
           <form className="w-full max-w-[400px] mx-auto px-4" onSubmit={handleSubmit(onSubmit)}>
             <div style={{ marginBottom: '20px' }}>
-              <InputText
+              <CommonInput
                 type="text"
                 value={value}
                 placeholder="name@work-email.com"
@@ -268,22 +295,22 @@ const SignupPage = () => {
             lineHeight: "1.5",
           }}>
             By continuing, you're agreeing to our{" "}
-            <a target="_blank" href="/main-services-agreement" rel="noopener noreferrer" style={{ color: '#1d1c1d' }}>
+            <a target="_blank" href="/main-services-agreement" rel="noopener noreferrer" style={{ color: '#1d1c1d', textDecoration: 'none' }}>
               Main Services Agreement
             </a>,{" "}
-            <a target="_blank" href="/terms-of-service/user" rel="noopener noreferrer" style={{ color: '#1d1c1d' }}>
+            <a target="_blank" href="/terms-of-service/user" rel="noopener noreferrer" style={{ color: '#1d1c1d', textDecoration: 'none' }}>
               User Terms of Service
             </a>,{" "}
             and{" "}
-            <a target="_blank" href="/slack-supplemental-terms" rel="noopener noreferrer" style={{ color: '#1d1c1d' }}>
+            <a target="_blank" href="/slack-supplemental-terms" rel="noopener noreferrer" style={{ color: '#1d1c1d', textDecoration: 'none' }}>
               Slack Supplemental Terms
             </a>.{" "}
             Additional disclosures are available in our{" "}
-            <a target="_blank" href="/privacy-policy" rel="noopener noreferrer" style={{ color: '#1d1c1d' }}>
+            <a target="_blank" href="/privacy-policy" rel="noopener noreferrer" style={{ color: '#1d1c1d', textDecoration: 'none' }}>
               Privacy Policy
             </a>{" "}
             and{" "}
-            <a target="_blank" href="/cookie-policy" rel="noopener noreferrer" style={{ color: '#1d1c1d' }}>
+            <a target="_blank" href="/cookie-policy" rel="noopener noreferrer" style={{ color: '#1d1c1d', textDecoration: 'none' }}>
               Cookie Policy
             </a>.
           </div>
@@ -311,7 +338,7 @@ const SignupPage = () => {
             <a
               target="_self"
               class="c-link"
-              href="/signin"
+              href="/workspace-signin"
               rel="noopener noreferrer"
               style={{
                 color: '#1264a3',
@@ -361,7 +388,8 @@ const SignupPage = () => {
                   marginBottom: '4px',
                   marginRight: '16px',
                   fontWeight: '500',
-                  textAlign: 'center'
+                  textAlign: 'center',
+                  textDecoration: 'none'
                 }}
               >
                 Privacy &amp; Terms
@@ -381,13 +409,16 @@ const SignupPage = () => {
                   marginBottom: '4px',
                   marginRight: '16px',
                   fontWeight: '500',
-                  textAlign: 'center'
+                  textAlign: 'center',
+                  textDecoration: 'none'
                 }}
               >
                 Contact Us
               </a>
               <div
-                class=""
+                style={{
+                  display: 'flex'
+                }}
               >
                 <a
                   target="_blank"
@@ -404,24 +435,36 @@ const SignupPage = () => {
                     marginBottom: '4px',
                     marginRight: '16px',
                     fontWeight: '500',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    textDecoration: 'none'
                   }}
                 >
-                  <i
-                    class="c-icon margin_right_25 c-icon--globe c-icon--inherit undefined"
-                    data-qa="slack_kit_icon"
-                    type="globe"
-                    aria-hidden="true"
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'anchor-center'
+                    }}
                   >
-                  </i>
-                  Change region
-                  <i
-                    class="c-icon c-icon--chevron-medium-down c-icon--inherit undefined"
-                    data-qa="slack_kit_icon"
-                    type="chevron-medium-down"
-                    aria-hidden="true"
-                  >
-                  </i>
+                    <FiGlobe
+                      class="c-icon margin_right_25 c-icon--globe c-icon--inherit undefined"
+                      data-qa="slack_kit_icon"
+                      type="globe"
+                      aria-hidden="true"
+                    >
+                    </FiGlobe  >
+                    <span style={{ marginLeft: '5px' }}>
+                      Change region
+                    </span>
+                    <MdKeyboardArrowDown
+                      class="c-icon c-icon--chevron-medium-down c-icon--inherit undefined"
+                      data-qa="slack_kit_icon"
+                      type="chevron-medium-down"
+                      aria-hidden="true"
+                    >
+                    </MdKeyboardArrowDown >
+                  </div>
                 </a>
               </div>
               <span
