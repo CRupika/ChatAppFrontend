@@ -11,7 +11,8 @@ export const AUTH_ROUTES = {
 export const APP_ROUTES = {
   HOME: "/",
   SIGNUP: "/signup",
-  SIGNIN: "/workspace-signin",
+  WORKSPACE_SIGNIN: "/workspace-signin",
   VERIFY_EMAIL: "/verify-email",
   WORKSPACE: "/workspace",
+  SIGNIN: "/signin",
 };

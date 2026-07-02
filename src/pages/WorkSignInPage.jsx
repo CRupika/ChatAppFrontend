@@ -67,48 +67,28 @@ const WorkSignin = () => {
     return (
         <>
             <div
-                style={{
-                    backgroundColor: 'rgba(var(--sk_primary_background), 1)',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    minHeight: '100vh',
-                    display: 'flex'
-                }}
+                className="flex min-h-screen flex-col items-center"
             >
                 <header
-                    style={{
-                        gridTemplateColumns: 'repeat(3, 1fr)',
-                        alignItems: 'center',
-                        width: '100%',
-                        padding: '48px 0 40px',
-                        display: 'grid'
-                    }}
+                    className="grid w-full grid-cols-3 items-center pt-12 pb-10"
                 >
                     <div class="left-col"></div>
                     <div className="text-center">
                         <a
                             target="_self"
-                            className="c-link"
+                            className="flex items-center justify-center no-underline"
                             href="https://slack.com"
                             rel="noopener noreferrer"
-                            style={{ textDecoration: 'none' }}
+
                         >
-                            {/* <img alt="Connectly" height="26" title="Connectly" src="https://a.slack-edge.com/bv1-13/slack_logo-e971fd7.svg" /> */}
                             <img
                                 alt="Connectly"
-                                height="26"
+                                className="h-[30px]"
                                 title="Connectly"
                                 src={slack}
                             />
                             <span
-                                style={{
-                                    fontFamily: "Lato, sans-serif",
-                                    fontWeight: '600',
-                                    fontSize: '35px',
-                                    letterSpacing: '-1px',
-                                    color: ' #1d1c1d',
-                                    marginLeft: '5px'
-                                }}
+                                className="ml-[5px] font-lato text-[35px] font-semibold tracking-[-1px] text-[#1d1c1d]"
                             >
                                 Connectly
                             </span>
@@ -117,34 +97,20 @@ const WorkSignin = () => {
                     <div className="right-col"></div>
                 </header >
                 <div
-                    style={{
-                        flexDirection: 'column',
-                        flexGrow: 1,
-                        flexShrink: 0,
-                        display: 'flex'
-                    }}
+                    className="flex flex-col grow shrink-0"
                 >
                     <h1
-                        className="mt-5 max-w-[700px] text-center text-[48px] font-bold leading-[46px] tracking-[-0.75px] text-black "
-                        style={{ color: '#1d1c1d' }}
+                        className="mt-5 max-w-[700px] text-center text-[48px] font-bold leading-[46px] tracking-[-0.75px] text-black mb-3"
                     >
                         Sign in to your workspace
                     </h1>
                     <div
-                        className="p-refreshed_page__sub_heading"
-                        style={{
-                            color: '#454245',
-                            textAlign: 'center',
-                            maxWidth: '700px',
-                            marginBottom: '32px',
-                            fontSize: '18px',
-                            lineHeight: '27px'
-                        }}
+                        className="max-w-[700px] mb-8 text-center text-[18px] leading-[27px] text-[#454245]"
                     >
                         We suggest using the <b>email address you use at work.</b>
                     </div>
                     <form className="w-full max-w-[400px] mx-auto px-4" onSubmit={handleSubmit(onSubmit)}>
-                        <div style={{ marginBottom: '20px' }}>
+                        <div className="mb-5">
                             <CommonInput
                                 type="text"
                                 value={value}
@@ -154,14 +120,7 @@ const WorkSignin = () => {
                                     onChange(e);
                                     handleEmailChange(e);
                                 }}
-                                style={{
-                                    border: "2px solid #ccc",
-                                    borderRadius: "12px",
-                                    padding: "10px 20px",
-                                    outline: "none",
-                                    width: "65%",
-                                    fontSize: "16px",
-                                }}
+                                className="w-[100%] rounded-xl border-2 border-[#ccc] px-5 py-2.5 text-base outline-none"
                             />
                             {
                                 errors.email && (
@@ -169,239 +128,124 @@ const WorkSignin = () => {
                                 )
                             }
                         </div>
-                        <div style={{ marginBottom: '20px' }}>
+                        <div className="mb-5">
                             <Button
                                 type="submit"
                                 label="Continue"
-                                severity="help"
                                 size="large"
-                                style={{
-                                    height: '43px',
-                                    borderRadius: '12px',
-                                    padding: '10px 20px',
-                                    width: '65%',
-                                    fontSize: '16px',
-                                    backgroundColor: '#611f69',
-                                    border: 'none'
-                                }}
+                                className="!bg-[rgb(97,31,105)] !border-[rgb(97,31,105)] !text-white h-[43px] w-full rounded-xl"
                             />
                         </div>
-                        <p
-                            style={{
-                                fontSize: '13px',
-                                lineHeight: '1.38463',
-                                fontWeight: 'initial',
-                                letterSpacing: 'var(--custom-font-tracking-caption, inherit)',
-                                color: 'rgba(var(--sk_foreground_max), .7)',
-                                marginBottom: '8px',
-                                width: '94%'
-                            }}
-                        >
-                            Don’t know your workspace URL?
-                            <a
-                                target="_self"
-                                class="c-link"
-                                data-qa="find_your_workspace"
-                                href="/get-started#/find"
-                                rel="noopener noreferrer"
-                                style={{
-                                    textDecoration: 'none',
-                                    color: ' #1264a3',
-                                    marginLeft: '2px'
-                                }}
-                            >
-                                <strong>
-                                    Find your workspaces
-                                </strong>
-                            </a>
-                        </p>
-                        <p
-                            style={{
-                                fontSize: '13px',
-                                lineHeight: '1.38463',
-                                fontWeight: 'initial',
-                                letterSpacing: 'var(--custom-font-tracking-caption, inherit)',
-                                color: 'rgba(var(--sk_foreground_max), .7)',
-                                marginBottom: '8px',
-                                width: '81%'
-                            }}
-                        >
-                            Trying to sign in to a
-                            <a
-                                target="_self"
-                                class="c-link"
-                                data-qa="workspace_signin"
-                                href="https://slack-gov.com/workspace-signin"
-                                rel="noopener noreferrer"
-                                style={{
-                                    textDecoration: 'none',
-                                    color: ' #1264a3',
-                                    marginLeft: '2px'
-                                }}
-                            >
-                                <strong>
-                                    GovSlack Workspace?
-                                </strong>
-                            </a>
-                        </p>
-                        <p
-                            style={{
-                                fontSize: '13px',
-                                lineHeight: '1.38463',
-                                fontWeight: 'initial',
-                                letterSpacing: 'var(--custom-font-tracking-caption, inherit)',
-                                color: 'rgba(var(--sk_foreground_max), .7)',
-                                marginBottom: '8px',
-                                // width: '94%'
-                                marginLeft:'4%'
-                            }}
-                        >
-                            Looking to create a workspace instead?
-                            <a
-                                target="_self"
-                                class="c-link"
-                                data-qa="create_workspace_link"
-                                href="/get-started#/create"
-                                rel="noopener noreferrer"
-                                style={{
-                                    textDecoration: 'none',
-                                    color: ' #1264a3',
-                                    marginLeft: '2px'
-                                }}
-                            >
-                                <strong>
-                                    Create a new workspace
-                                </strong>
-                            </a>
-                        </p>
                     </form>
-                </div>
-                <div
-                    style={{
-                        width: '100%',
-                        maxWidth: '100%'
-                    }}
-                >
-                    <div
-                        style={{
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            padding: '32px 0',
-                            display: 'flex'
-                        }}
+                    <p
+                        className="mb-2 ml-[94px] text-[13px] font-normal leading-[1.38463] tracking-normal text-[rgba(var(--sk_foreground_max),0.7)]"
                     >
-                        <footer
+                        Don’t know your workspace URL?
+                        <a
+                            target="_self"
+                            class="c-link"
+                            data-qa="find_your_workspace"
+                            href="/get-started#/find"
+                            rel="noopener noreferrer"
                             style={{
-                                textAlign: 'center',
-                                border: 'none',
-                                placeContent: 'center',
-                                width: '100%',
-                                padding: '0',
-                                display: 'flex'
+                                textDecoration: 'none',
+                                color: ' #1264a3',
+                                marginLeft: '2px'
                             }}
                         >
+                            <strong>
+                                Find your workspaces
+                            </strong>
+                        </a>
+                    </p>
+                    <p
+                        className="mb-2 ml-[94px] text-[13px] font-normal leading-[1.38463] tracking-[var(--custom-font-tracking-caption)] text-[rgba(var(--sk_foreground_max),0.7)]"
+                    >
+                        Trying to sign in to a
+                        <a
+                            target="_self"
+                            class="c-link"
+                            data-qa="workspace_signin"
+                            href="https://slack-gov.com/workspace-signin"
+                            rel="noopener noreferrer"
+                            style={{
+                                textDecoration: 'none',
+                                color: ' #1264a3',
+                                marginLeft: '2px'
+                            }}
+                        >
+                            <strong>
+                                GovSlack Workspace?
+                            </strong>
+                        </a>
+                    </p>
+                    <p
+                        className="mb-2 ml-[17%] text-[13px] font-normal leading-[1.38463] tracking-[var(--custom-font-tracking-caption)] text-[rgba(var(--sk_foreground_max),0.7)]"
+                    >
+                        Looking to create a workspace instead?
+                        <a
+                            target="_self"
+                            class="c-link"
+                            data-qa="create_workspace_link"
+                            href="/get-started#/create"
+                            rel="noopener noreferrer"
+                            style={{
+                                textDecoration: 'none',
+                                color: ' #1264a3',
+                                marginLeft: '2px'
+                            }}
+                        >
+                            <strong>
+                                Create a new workspace
+                            </strong>
+                        </a>
+                    </p>
+                </div>
+
+                <div className="w-full max-w-full">
+                    <div className="flex flex-col items-center py-8">
+                        <footer className="flex w-full justify-center border-0 p-0 text-center">
                             <a
                                 target="_blank"
-                                data-qa="unstyled-button"
                                 href="/legal"
                                 rel="noopener noreferrer"
-                                style={{
-                                    fontSize: '15px',
-                                    lineHeight: '1.46668',
-                                    fontWeight: 'initial',
-                                    letterSpacing: 'var(--custom-font-tracking-body, inherit)',
-                                    color: '#696969',
-                                    letterSpacing: '-.2px',
-                                    marginBottom: '4px',
-                                    marginRight: '16px',
-                                    fontWeight: '500',
-                                    textAlign: 'center',
-                                    textDecoration: 'none'
-                                }}
+                                className="mb-1 mr-4 text-center text-[15px] font-medium leading-[1.46668] tracking-[-0.2px] text-[#696969] no-underline"
                             >
                                 Privacy &amp; Terms
                             </a>
+
                             <a
                                 target="_blank"
-                                data-qa="unstyled-button"
                                 href="/help/requests/new"
                                 rel="noopener noreferrer"
-                                style={{
-                                    fontSize: '15px',
-                                    lineHeight: '1.46668',
-                                    fontWeight: 'initial',
-                                    letterSpacing: 'var(--custom-font-tracking-body, inherit)',
-                                    color: '#696969',
-                                    letterSpacing: '-.2px',
-                                    marginBottom: '4px',
-                                    marginRight: '16px',
-                                    fontWeight: '500',
-                                    textAlign: 'center',
-                                    textDecoration: 'none'
-                                }}
+                                className="mb-1 mr-4 text-center text-[15px] font-medium leading-[1.46668] tracking-[-0.2px] text-[#696969] no-underline"
                             >
                                 Contact Us
                             </a>
-                            <div
-                                style={{
-                                    display: 'flex'
-                                }}
-                            >
+
+                            <div className="flex">
                                 <a
                                     target="_blank"
-                                    data-qa="unstyled-button"
                                     href="#"
                                     rel="noopener noreferrer"
-                                    style={{
-                                        fontSize: '15px',
-                                        lineHeight: '1.46668',
-                                        fontWeight: 'initial',
-                                        letterSpacing: 'var(--custom-font-tracking-body, inherit)',
-                                        color: '#696969',
-                                        letterSpacing: '-.2px',
-                                        marginBottom: '4px',
-                                        marginRight: '16px',
-                                        fontWeight: '500',
-                                        textAlign: 'center',
-                                        textDecoration: 'none'
-                                    }}
+                                    className="mb-1 mr-4 text-center text-[15px] font-medium leading-[1.46668] tracking-[-0.2px] text-[#696969] no-underline"
                                 >
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            flexDirection: 'row',
-                                            justifyContent: 'center',
-                                            alignItems: 'anchor-center'
-                                        }}
-                                    >
-                                        <FiGlobe
-                                            class="c-icon margin_right_25 c-icon--globe c-icon--inherit undefined"
-                                            data-qa="slack_kit_icon"
-                                            type="globe"
-                                            aria-hidden="true"
-                                        >
-                                        </FiGlobe  >
-                                        <span style={{ marginLeft: '5px' }}>
+                                    <div className="flex flex-row items-center justify-center">
+                                        <FiGlobe />
+
+                                        <span className="ml-[5px]">
                                             Change region
                                         </span>
-                                        <MdKeyboardArrowDown
-                                            class="c-icon c-icon--chevron-medium-down c-icon--inherit undefined"
-                                            data-qa="slack_kit_icon"
-                                            type="chevron-medium-down"
-                                            aria-hidden="true"
-                                        >
-                                        </MdKeyboardArrowDown >
+
+                                        <MdKeyboardArrowDown />
                                     </div>
                                 </a>
                             </div>
-                            <span
-                                hidden=""
-                                data-sk="popover-trigger"
-                            >
-                            </span>
+
+                            <span hidden data-sk="popover-trigger"></span>
                         </footer>
                     </div>
-                </div >
+                </div>
             </div >
 
         </>
