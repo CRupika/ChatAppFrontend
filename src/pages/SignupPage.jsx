@@ -3,7 +3,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from 'primereact/button';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase";
 import CommonInput from "../components/ui/CommonInput";
@@ -11,24 +11,50 @@ import { FiGlobe } from "react-icons/fi";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import slack from '../../src/assets/slack.png';
 import Password from "../components/ui/Password";
+import { createSignup } from '../services/action/actioncreator/AuthAction/SignupAction'
+import { useToast } from "../components/ui/Toast";
+import { encryptUsingAES256 } from "../utils";
+import { useDispatch, useSelector } from 'react-redux';
 
 const SignupPage = () => {
-  const [value, setValue] = useState("")
-  const [password, setPassword] = useState("")
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const { showToast } = useToast();
 
   const {
     register,
+    control,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+      fullName: ""
+    },
     mode: "onChange",
   });
 
+  const fullNameRegister = register("fullName", {
+    required: "Full name is required",
+    minLength: {
+      value: 3,
+      message: "Full name must be at least 3 characters",
+    },
+    maxLength: {
+      value: 50,
+      message: "Full name cannot exceed 50 characters",
+    },
+    pattern: {
+      value: /^[A-Za-z]+(?:\s[A-Za-z]+)*$/,
+      message: "Full name can only contain letters and spaces",
+    },
+  });
 
-  const {
-    onChange,
-    ...emailRegister
-  } = register("email", {
+  const emailRegister = register("email", {
     required: "Email is required",
     pattern: {
       value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -36,34 +62,44 @@ const SignupPage = () => {
     },
   });
 
-  const navigate = useNavigate()
+  const passwordRegister = register("password", {
+    required: "Password is required",
+    pattern: {
+      value:
+        /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!*]).*$/,
+      message:
+        "Password must be at least 8 characters and include an uppercase letter, a lowercase letter, a number, and a special character.",
+    },
+  });
 
-  const handleEmailChange = (e) => {
-    setValue(e.target.value)
-  }
+
 
   const onSubmit = (data) => {
-    console.log('Data ----> 29', data)
-    if (data.email) {
-      navigate('/verify-email')
-    }
+
+    console.log("data ----> 79", data)
+
+    const payload = {
+      username:data?.fullName,
+      email: data?.email.trim(),
+      password: encryptUsingAES256(
+        data?.password.trim()
+      )
+    };
+
+    console.log('payload --------> 74', payload)
+
+    dispatch(
+      createSignup(
+        payload,
+        // headers,
+        navigate,
+        // showLoader,
+        // hideLoader,
+        showToast
+      )
+
+    );
   }
-
-  // const handleGoogleLogin = () => {
-  //   //  alert(5);
-  //   signInWithPopup(auth, provider)
-  //     .then((result) => {
-  //       const credential = GoogleAuthProvider.credentialFromResult(result);
-  //       const user = result.user;
-  //       console.log('USER ------> 53',user)
-  //       // navigate('/workspace')
-
-  //     }).catch((error) => {
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-
-  //     });
-  // }
 
   const handleGoogleLogin = async () => {
     try {
@@ -75,7 +111,7 @@ const SignupPage = () => {
       console.log('RESULT ----> 70', result)
       console.log('USER ----> 71', result.user);
 
-      // navigate("/workspace");
+      navigate("/signin");
     } catch (error) {
       console.log("Login failed");
       console.log("Error code:", error.code);
@@ -131,54 +167,64 @@ const SignupPage = () => {
             We suggest using the <b>email address you use at work.</b>
           </div>
           <form className="w-full max-w-[400px] mx-auto px-4" onSubmit={handleSubmit(onSubmit)}>
+
             <div className="mb-5">
               <CommonInput
                 type="text"
-                value={value}
+                placeholder="Enter your full name"
+                {...fullNameRegister}
+                className="w-full rounded-xl border-2 border-[#ccc] px-5 py-2.5 text-base outline-none"
+              />
+
+              {errors.fullName && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.fullName.message}
+                </p>
+              )}
+            </div>
+
+            <div className="mb-5">
+              <CommonInput
+                type="text"
                 placeholder="name@work-email.com"
                 {...emailRegister}
-                onChange={(e) => {
-                  onChange(e);
-                  handleEmailChange(e);
-                }}
                 className="w-[100%] rounded-xl border-2 border-[#ccc] px-5 py-2.5 text-base outline-none"
               />
               {
                 errors.email && (
-                  <p style={{ color: 'red' }}>{errors.email.message}</p>
+                  <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
                 )
               }
             </div>
 
-            {/* <div className="mb-5">
-              <Password
-                type="password"
+            <div className="mb-5 w-[368px]">
+
+              <Controller
                 name="password"
-                value={value}
-                onChange={onChange}
-                className="w-[366px]"
-                inputClassName="h-[43px] w-full rounded-xl border-2 border-[#ccc] px-5 py-2.5 text-base w-[366px]"
-                placeholder="Enter your password"
-              />
-              {
-                errors.email && (
-                  <p style={{ color: 'red' }}>{errors.email.message}</p>
-                )
-              }
-            </div> */}
-            <div className="mb-5 w-[450px]">
-              <Password
-                type="password"
-                name="password"
-                value={value}
-                onChange={onChange}
-                className="w-full"
-                inputClassName="h-[43px] w-full rounded-xl border-2 border-[#ccc] px-5 py-2.5 text-base"
-                placeholder="Enter your password"
+                control={control}
+                rules={{
+                  required: "Password is required",
+                  pattern: {
+                    value:
+                      /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!*]).*$/,
+                    message:
+                      "Password must be at least 8 characters and contain an uppercase letter, a lowercase letter, a number, and a special character.",
+                  },
+                }}
+                render={({ field }) => (
+                  <Password
+                    {...field}
+                    feedback={false}
+                    toggleMask
+                    className="w-[368px]"
+                    inputClassName="h-[43px] rounded-xl border-2 border-[#ccc] px-5 py-2.5 text-base w-[368px]"
+                    placeholder="Enter your password"
+                  />
+                )}
               />
 
-              {errors.email && (
-                <p className="text-red-500">{errors.email.message}</p>
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
               )}
             </div>
             <div className="mb-5">

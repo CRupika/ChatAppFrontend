@@ -15,4 +15,5 @@ export const APP_ROUTES = {
   VERIFY_EMAIL: "/verify-email",
   WORKSPACE: "/workspace",
   SIGNIN: "/signin",
+  CHAT  : "/chat"
 };

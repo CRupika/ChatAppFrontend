@@ -14,6 +14,8 @@
     "@primereact/core": "^11.0.0-rc.1",
     "@primereact/ui": "^11.0.0-rc.1",
     "@primeuix/themes": "^3.0.0-rc.1",
+    "axios": "^1.18.1",
+    "crypto-js": "^4.2.0",
     "firebase": "^12.15.0",
     "formik": "^2.4.9",
     "primeicons": "^7.0.0",
@@ -23,7 +25,10 @@
     "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.80.0",
     "react-icons": "^5.7.0",
-    "react-router-dom": "^6.22.0"
+    "react-redux": "^9.3.0",
+    "react-router-dom": "^6.22.0",
+    "redux": "^5.0.1",
+    "redux-thunk": "^3.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

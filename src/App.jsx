@@ -5,6 +5,7 @@ import VerifyMailPage from "./pages/VerifyemailPage";
 import WorkSpace from "./pages/WorkSpacePage";
 import WorkSignin from "./pages/WorkSignInPage";
 import SigninPage from "./pages/SigninPage";
+import Chat from "./pages/ChatPage";
 // import 'primeicons/primeicons.css';
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         <Route path={APP_ROUTES.WORKSPACE} element={<WorkSpace/>}/>
         <Route path={APP_ROUTES.WORKSPACE_SIGNIN} element={<WorkSignin/>}/>
         <Route path={APP_ROUTES.SIGNIN} element={<SigninPage/>} />
+        <Route path={APP_ROUTES.CHAT} element={<Chat/>} />
       </Routes>
     </BrowserRouter>
   );
